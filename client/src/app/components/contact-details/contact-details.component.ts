@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import Contact from '../../models/contact';
+import {Contact} from '../../models/contact';
 import { CommonModule } from '@angular/common';
 import { ContactsService } from '../../services/contacts.service';
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -9,6 +9,7 @@ import { handleImageChange } from '../../middleware/imageUtils';
 import { ConfirmDeleteDialogComponent } from '../dialogs/confirm-delete-dialog/confirm-delete-dialog.component';
 import { SanitizeInputDirective } from '../../directives/sanitize-input.directive';
 import { SanitizeNumbersInputDirective } from '../../directives/sanitize-numbers-input.directive';
+import { FileInput, ImageURL } from '../../models/types';
 
 @Component({
   selector: 'app-contact-details',
@@ -24,10 +25,21 @@ export class ContactDetailsComponent implements OnInit {
   contactForm!: FormGroup;
   isEditMode: boolean = false;
   id: string = ''
-  data: Contact = new Contact()
+  data: Contact = {
+    _id: '',
+    name: '',
+    fullAddress: '',
+    email: '',
+    phone: '',
+    cell: '',
+    registrationDate: new Date(),
+    age: 0,
+    image: null,
+    imageType: ''
+  };
 
-  imageInput: File | null = null;
-  imageURL: string | null | ArrayBuffer = null;
+  imageInput: FileInput = null;
+  imageURL: ImageURL = null;
 
   @ViewChild('confirmDeleteDialog') confirmDeleteDialog!: ConfirmDeleteDialogComponent;
 
@@ -155,9 +167,7 @@ export class ContactDetailsComponent implements OnInit {
     this.data.cell = this.contactForm.value.cell
     this.data.age = this.contactForm.value.age
     this.data.age = this.contactForm.value.age
-    // if (this.imageInput) {
     this.data.image = this.imageInput; // Set the image as File
-    // }
   }
 
   deleteContact() {

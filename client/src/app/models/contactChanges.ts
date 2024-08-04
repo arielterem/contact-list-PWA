@@ -1,7 +1,7 @@
-import Contact from "./contact";
+import {Contact} from "./contact";
 
 export default interface ContactChange {
     id: string;
-    operation: 'update' | 'create';
+    operation: 'update' | 'create' | 'delete';
     contact: Contact;
 }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError, tap, from } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import Contact from '../models/contact';
+import {Contact} from '../models/contact';
 import { convertContactImageBufferToBlob } from '../middleware/imageUtils';
 import { IdbService } from './idb.service';
 

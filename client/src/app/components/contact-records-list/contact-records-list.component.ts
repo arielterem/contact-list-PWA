@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ContactsService } from '../../services/contacts.service';
-import Contact from '../../models/contact';
+import {Contact} from '../../models/contact';
 import { CommonModule } from '@angular/common';
 import { SingleContactRecordComponent } from '../single-contact-record/single-contact-record.component';
 import { Router, RouterModule } from '@angular/router';
@@ -51,7 +51,7 @@ export class ContactRecordsListComponent implements OnInit {
     list.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }));
 
     const temp: any[] = [];
-    let lastTitle: string | null = null;
+    let lastTitle: string = '';
 
     // Iterate through the sorted list
     list.forEach(contact => {

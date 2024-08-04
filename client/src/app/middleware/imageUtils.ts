@@ -6,17 +6,22 @@
  * @param image - The image as a Blob or File object.
  * @returns The URL representing the image or an empty string if the image is not a Blob.
  */
-export function blobToImageUrl(image: Blob | null): string {
-  if (image) {
-    // Check if the image is a Blob or File before creating the URL
-    if (image instanceof Blob) {
-      return URL.createObjectURL(image);
-    } else if (typeof image === 'string') {
-      return image;
-    }
+export function blobToImageUrl(image: Blob | string | null): string | null {
+  if (!image) {
+    return null;
   }
-  return '';
+
+  if (image instanceof Blob) {
+    return URL.createObjectURL(image);
+  } else if (typeof image === 'string') {
+    return image;
+  }
+
+  return null;
 }
+
+
+
 
 /**
  * Handle image change event and read the image file as a data URL.
@@ -60,7 +65,7 @@ export function convertBufferToBlob(buffer: any): Blob {
 
 
 
-import Contact from "../models/contact";
+import {Contact} from "../models/contact";
 /**
  * Converts a Contact's image buffer to a Blob.
  * @param contact - The Contact object containing the image buffer.

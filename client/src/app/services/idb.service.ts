@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { openDB, DBSchema, IDBPDatabase, IDBPObjectStore } from 'idb';
-import Contact from '../models/contact';
+import { Contact } from '../models/contact';
 import ContactChange from '../models/contactChanges';
 import { HttpClient } from '@angular/common/http';
 import { v4 as uuidv4 } from 'uuid';
-import { convertFileToBuffer } from '../middleware/imageUtils';
 
 
 interface MyDB extends IDBPDatabase {
@@ -26,9 +25,6 @@ export class IdbService {
     // Initialize database
     this.dbPromise = this.initDb();
   }
-
-
-  // Call this function before initializing the database
 
 
   async contactListCameFromServer(contacts: Contact[]): Promise<void> {
@@ -143,19 +139,19 @@ export class IdbService {
 
   private syncInProgress = false;
   async syncChanges(): Promise<void> {
-  
+
     if (this.syncInProgress) {
       return;
     }
-  
+
     this.syncInProgress = true;
-  
+
     try {
       const db = await this.dbPromise;
       const tx = db.transaction('contact-changes', 'readonly');
       const changes = await tx.store.getAll();
-  
-  
+
+
       // Filter changes
       const updates = changes.filter(change => change.operation === 'update');
       const creations = changes.filter(change => change.operation === 'create');
@@ -166,7 +162,7 @@ export class IdbService {
         const formData = this.formData(change.contact);
         await this.http.put<Contact>(`${this.url}/${change.id}`, formData).toPromise();
       }
-  
+
       // Handle creations
       for (const change of creations) {
         const formData = this.formData(change.contact);
@@ -174,49 +170,45 @@ export class IdbService {
         const newTx = db.transaction(['contacts', 'contact-changes'], 'readwrite');
         const contactsStore = await newTx.objectStore('contacts');
         const changesStore = await newTx.objectStore('contact-changes');
-  
+
         // Delete the old contact with the temporary ID
         await contactsStore.delete(change.id);
         await changesStore.delete(change.id);
-  
+
         // Add the new contact with the server-assigned ID
         await contactsStore.put(newContact);
         await newTx.done;
       }
-  
+
       // Handle deletions
       for (const change of deletions) {
         await this.http.delete(`${this.url}/${change.id}`).toPromise();
       }
-  
+
       // Clear the changes after successful sync
       const txClear = db.transaction('contact-changes', 'readwrite');
       await txClear.store.clear();
       await txClear.done;
-  
+
     } catch (error) {
       console.error('Error syncing changes with the server:', error);
     } finally {
       this.syncInProgress = false;
     }
   }
-  
+
 
 
   private formData(contact: Contact): FormData {
     const formData = new FormData();
-    
+
     formData.append('name', contact.name || '');
     formData.append('fullAddress', contact.fullAddress || '');
     formData.append('email', contact.email || '');
     formData.append('phone', contact.phone || '');
     formData.append('cell', contact.cell || '');
     formData.append('age', (contact.age !== undefined && contact.age !== null) ? contact.age.toString() : '');
-  
-    // if (contact._id === '') {
-    //   formData.append('registrationDate', contact.registrationDate ? contact.registrationDate.toISOString() : new Date().toISOString());
-    // }
-  
+
     if (contact.image) {
       if (contact.image instanceof File || contact.image instanceof Blob) {
         formData.append('image', contact.image); // Append File or Blob
@@ -225,8 +217,8 @@ export class IdbService {
         console.error('Invalid image format');
       }
     }
-  
+
     return formData;
   }
-  
+
 }
