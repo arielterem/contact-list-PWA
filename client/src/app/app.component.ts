@@ -7,6 +7,7 @@ import { ContactRecordsListComponent } from './components/contact-records-list/c
 import { IdbService } from './services/idb.service';
 import { ContactsService } from './services/contacts.service';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
