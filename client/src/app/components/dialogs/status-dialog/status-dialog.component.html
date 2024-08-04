@@ -1,0 +1,20 @@
+<div class="success-dialog" *ngIf="isVisible">
+  <div class="dialog-content">
+    <div class="dialog-header">
+      <span class="dialog-close" (click)="onClose()">×</span>
+    </div>
+    <div class="dialog-body">
+      @if(success){
+      <div class="success-icon">
+        <i class="fas fa-check"></i>
+      </div>
+      }
+      @else{
+      <div class="fail-icon">
+        <i class="fa-solid fa-wifi"></i>
+      </div>
+      }
+      <p>{{ message }}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+.card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 7px;
+    box-shadow: 0 3px 15px 0 rgba(0, 0, 0, 0.05);
+    margin-top: 5px;
+    overflow: hidden; /* Ensures that overflow content is clipped */
+    max-width: 100%; /* Ensure card width does not exceed container */
+}
+
+.card h3,
+.card p {
+    color: rgb(69, 69, 69);
+    margin: 0;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Add '...' for overflow text */
+    padding-right: 20px; /* Space before the text is cut off */
+}
+
+.card h3 {
+    font-weight: bold;
+    flex: 1; /* Allows flex-grow */
+}
+
+.card p {
+    font-size: 13px;
+    color: #65676b;
+}
+
+.card__image {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    margin-right: 12px;
+    object-fit: cover;
+}
+.card__content {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Allow content to take up remaining space */
+    overflow: hidden; /* Hide overflow content */
+}
+
+.card__text {
+    overflow: hidden; /* Ensure text does not overflow */
+    white-space: nowrap; /* Prevent wrapping */
+    text-overflow: ellipsis; /* Add '...' for overflow text */
+    padding-right: 20px; /* Space before the text is cut off */
+}
+// .card__seen {
+//     position: absolute;
+//     right: 16px;
+//     top: 50%;
+//     transform: translateY(-50%);
+//     width: 16px;
+//     height: 16px;
+//     border-radius: 50%;
+// }
+
+// .new_msg {
+//     position: absolute;
+//     right: 16px;
+//     top: 50%;
+//     transform: translateY(-50%);
+//     width: 16px;
+//     height: 16px;
+//     border-radius: 50%;
+//     background-color: rgb(56, 176, 251);
+// }
+
+// .clickable-div {
+//     cursor: pointer;
+//     display: flex; /* Ensure flex container is used */
+//     align-items: center; /* Align items vertically */
+// }

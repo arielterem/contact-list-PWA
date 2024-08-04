@@ -1,0 +1,122 @@
+<!-- 
+<input type="file" (change)="handleFileInput($event)" />
+
+<button (click)="createNewContact()">Create Contact</button>
+ -->
+ <div class="header-container">
+    <i class="fas fa-chevron-left" [routerLink]="['']"></i>
+    <h3 *ngIf="id != '' && !isEditMode">Contact</h3>
+    <h3 *ngIf="id == '' && isEditMode">Create New Contact</h3>
+    <h3 *ngIf="id != '' && isEditMode">Edit Contact</h3>
+</div>
+
+
+<div class="actions-field" *ngIf="!isEditMode">
+    <div class="single-action-field edit-action" [routerLink]="['/details', data._id, 'true']">
+        edit
+    </div>
+    <div class="single-action-field delete-action" (click)="deleteContact()">
+        delete
+    </div>
+</div>
+
+<!-- <form [formGroup]="contactForm" (ngSubmit)="isEditMode ? editExistingContact() : addNewContact()"> -->
+<form [formGroup]="contactForm" (ngSubmit)="id == '' ? addNewContact() : (isEditMode ? editExistingContact() : '')">
+
+    <div class="image-field">
+        <div class="image-content"  [ngClass]="{'edit-mode': isEditMode}">
+            <img [src]="imageURL ? imageURL : '../../../assets/no-profile.png'" class="image-preview"
+                alt="Contact Image" />
+            <div *ngIf="isEditMode" class="edit-icon-container">
+                <input type="file" id="fileInput" (change)="onImageChange($event)" accept="image/*" hidden />
+                <i class="pen-icon" (click)="triggerFileInput()"></i>
+            </div>
+            <div *ngIf="isEditMode && imageURL" class="remove-text" (click)="removeImage()"><i class="fa-regular fa-trash-can"></i></div>
+        </div>
+    </div>
+
+    <div class="field">
+        <i class="fa-solid fa-user"></i>
+        <div *ngIf="!isEditMode">
+            <p>{{ data.name }}</p>
+        </div>
+        <ng-container *ngIf="isEditMode" class="field-with-validation">
+            <input class="input" formControlName="name" placeholder="name *" appSanitizeInput/>
+            <div class="checkmark" *ngIf="!name.valid && name.touched">
+                &#42;
+                <span class="tooltip">required</span>
+            </div>
+        </ng-container>
+    </div>
+
+    <div class="field">
+        <i class="fa-solid fa-house"></i>
+        <div *ngIf="!isEditMode">
+            <p>{{ data.fullAddress }}</p>
+        </div>
+        <ng-container *ngIf="isEditMode">
+            <input class="input" formControlName="fullAddress" placeholder="address" appSanitizeInput/>
+        </ng-container>
+    </div>
+
+    <div class="field">
+        <i class="fa-solid fa-at"></i>
+        <div *ngIf="!isEditMode">
+            <p>{{ data.email }}</p>
+        </div>
+        <ng-container *ngIf="isEditMode">
+            <input class="input" formControlName="email" placeholder="email" appSanitizeInput/>
+            <div class="checkmark" *ngIf="!email.valid && email.touched">
+                &#42;
+                <span class="tooltip">email is not valid</span>
+            </div>
+        </ng-container>
+    </div>
+
+    <div class="field">
+        <i class="fa-solid fa-phone"></i>
+        <div *ngIf="!isEditMode">
+            <p>{{ data.phone }}</p>
+        </div>
+        <ng-container *ngIf="isEditMode">
+            <input class="input" formControlName="phone" placeholder="phone" appSanitizeNumbersInput />
+            <div class="checkmark" *ngIf="!phone.valid && phone.touched">
+                &#42;
+                <span class="tooltip">numbers only</span>
+            </div>
+        </ng-container>
+    </div>
+
+    <div class="field">
+        <i class="fa-solid fa-phone"></i>
+        <div *ngIf="!isEditMode">
+            <p>{{ data.cell }}</p>
+        </div>
+        <ng-container *ngIf="isEditMode">
+            <input class="input" formControlName="cell" placeholder="cell" appSanitizeInput/>
+        </ng-container>
+    </div>
+
+    <div class="field">
+        <i class="fa-solid fa-person"></i>
+        <div *ngIf="!isEditMode">
+            <p>{{ data.age }}</p>
+        </div>
+        <ng-container *ngIf="isEditMode">
+            <input class="input" formControlName="age" placeholder="age" type="number" appSanitizeNumbersInput/>
+        </ng-container>
+    </div>
+
+    <div class="field" *ngIf="id == ''">
+        <button class="input button" type="submit" [disabled]="!contactForm.valid">Add</button>
+    </div>
+
+    <div class="field" *ngIf="id != '' && isEditMode">
+        <button class="input button" type="submit" [disabled]="!contactForm.valid">Save Changes</button>
+    </div>
+
+</form>
+
+
+<app-confirm-delete-dialog #confirmDeleteDialog (confirm)="onDeleteConfirmed()">
+</app-confirm-delete-dialog>

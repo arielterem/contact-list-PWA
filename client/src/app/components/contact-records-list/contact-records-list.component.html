@@ -1,0 +1,76 @@
+<div class="main-container">
+    <div class="banner-container">
+        <div class="actions-field">
+            <div class="single-action-field" [routerLink]="['/details', '', 'true']">
+                &#65291;
+            </div>
+            <div class="single-action-field" (click)="random10()">
+                &#10024;
+            </div>
+        </div>
+
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="search"
+                [placeholder]="contactsList.length === 0 ? 'no contacts yet' : 'search in ' + contactsList.length + ' contacts'"
+                [(ngModel)]="searchTerm">
+        </div>
+    </div>
+
+    <div class="container">
+
+        <ul class="alpha-nav" *ngIf="searchTerm == ''">
+            <li><a href="#A">A</a></li>
+            <li><a href="#B">B</a></li>
+            <li><a href="#C">C</a></li>
+            <li><a href="#D">D</a></li>
+            <li><a href="#E">E</a></li>
+            <li><a href="#F">F</a></li>
+            <li><a href="#G">G</a></li>
+            <li><a href="#H">H</a></li>
+            <li><a href="#I">I</a></li>
+            <li><a href="#J">J</a></li>
+            <li><a href="#K">K</a></li>
+            <li><a href="#L">L</a></li>
+            <li><a href="#M">M</a></li>
+            <li><a href="#N">N</a></li>
+            <li><a href="#O">O</a></li>
+            <li><a href="#P">P</a></li>
+            <li><a href="#Q">Q</a></li>
+            <li><a href="#R">R</a></li>
+            <li><a href="#S">S</a></li>
+            <li><a href="#T">T</a></li>
+            <li><a href="#U">U</a></li>
+            <li><a href="#V">V</a></li>
+            <li><a href="#W">W</a></li>
+            <li><a href="#X">X</a></li>
+            <li><a href="#Y">Y</a></li>
+            <li><a href="#Z">Z</a></li>
+            <li><a href="#OTHER">#</a></li>
+        </ul>
+
+        <div class="content-holder">
+            <ng-container *ngFor="let item of titledList | filterContactsList:searchTerm">
+                @if(isString(item)){
+                <div [id]="item">{{item}}</div>
+                }
+                @else{
+                <app-single-contact-record class="record" [routerLink]="['/details', item._id, 'false']"
+                    [name]="item.name" [fullAddress]="item.fullAddress"
+                    [image]="item.image"></app-single-contact-record>
+                }
+            </ng-container>
+        </div>
+
+        <div class="empty-state" *ngIf="contactsList.length === 0">
+            <i class="far fa-address-book"></i>
+            <h3>no contacts yet</h3>
+        </div>
+
+    </div>
+    
+    
+    <app-status-dialog #statusDialog></app-status-dialog>
+    
+    <app-loader *ngIf="loading"></app-loader>
+</div>

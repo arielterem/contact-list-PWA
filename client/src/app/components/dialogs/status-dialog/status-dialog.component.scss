@@ -1,0 +1,65 @@
+.success-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+  }
+  
+  .dialog-content {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .dialog-header {
+    position: relative;
+    margin-bottom: 15px;
+  }
+  
+  .dialog-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    font-size: 20px;
+    color: #333;
+  }
+  
+  .dialog-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .success-icon {
+    font-size: 40px;
+    color: green;
+    margin-bottom: 10px;
+  }
+
+  .fail-icon {
+    font-size: 40px;
+    color: red;
+    margin-bottom: 10px;
+  }
+  
+  .dialog-body p {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+  }
+  
+
+  i {
+    font-family: 'Font Awesome 5 Free'; /* Ensure the correct font family */
+    font-weight: 900; /* Required for solid icons */
+  }
+  
+  .fas {
+    font-size: 24px; /* Adjust size */
+    color: green; /* Set color */
+  }

@@ -1,0 +1,46 @@
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .dialog-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    width: 300px;
+    text-align: center;
+  }
+  
+  .dialog-actions {
+    margin-top: 20px;
+  }
+  
+  .dialog-actions button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 90px;
+    height: 35px;
+  }
+  
+  .dialog-actions button:first-child {
+    background-color: white;
+    color: #1b305b;
+    border: solid 1px #1b305b;
+  }
+  
+  .dialog-actions button:last-child {
+    background-color: #1b305b;
+    color: white;
+  }
+  
